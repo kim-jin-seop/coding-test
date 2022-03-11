@@ -11,8 +11,8 @@ public class Solution {
         for (int i = 2; i < N + 1; i++)
             distance[i] = -1;
 
-        connectRoad(road, map);
-        findShortestDistanceByA(map, distance, 1, N);
+        connectRoad(road, map); // 길 연결
+        findShortestDistanceByA(map, distance, 1, N); //최단거리 구하기
 
         int count = 0;
         for (int i = 1; i < N + 1; i++)
@@ -23,9 +23,9 @@ public class Solution {
 
     public void connectRoad(int[][] road, Map<Village, Integer> map) {
         for (int i = 0; i < road.length; i++) {
-            int vilA = road[i][0];
-            int vilB = road[i][1];
-            int weight = road[i][2];
+            int vilA = road[i][0]; // 마을1
+            int vilB = road[i][1]; // 마을 2
+            int weight = road[i][2]; // 가중치
 
             Village forward = new Village(vilA, vilB);
             Village reverse = new Village(vilB, vilA);
@@ -33,20 +33,20 @@ public class Solution {
             if (map.containsKey(forward)) {
                 weight = map.get(forward) < weight ? map.get(forward) : weight;
             }
-            map.put(forward, weight);
-            map.put(reverse, weight);
+            map.put(forward, weight); // 마을2, 마을1로 이어줌
+            map.put(reverse, weight); // 마을1, 마을2로 이어줌
         }
     }
 
     public void findShortestDistanceByA(Map<Village, Integer> map, int[] distance, int now, int N) {
         for (int i = 1; i <= N; i++) {
             Village village = new Village(now, i);
-            if (!map.containsKey(village))
+            if (!map.containsKey(village)) //만약 길이 연결되어 있지 않다면
                 continue;
             Integer weight = map.get(village);
             if (distance[i] > distance[now] + weight || distance[i] == -1) {
                 distance[i] = distance[now] + weight;
-                findShortestDistanceByA(map, distance, i, N);
+                findShortestDistanceByA(map, distance, i, N); //연결된 마을에 대하여 다시 확인
             }
         }
     }
