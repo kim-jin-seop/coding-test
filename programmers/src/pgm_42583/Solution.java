@@ -10,19 +10,23 @@ public class Solution {
         Queue<int[]> road = new LinkedList<>();
         int ptr = 0;
 
+        //트럭 다리 위로 올리기
         while (ptr < truck_weights.length){
             count++;
 
+            //트럭이 통과할 때
             if(!road.isEmpty() &&count-road.peek()[1] == bridge_length){
                 int[] truck = road.remove();
                 roadWeight -= truck[0];
             }
 
+            //트럭이 올라갈 때
             if(truck_weights[ptr] + roadWeight <= weight){
                 road.add(new int[]{truck_weights[ptr],count});
                 roadWeight += truck_weights[ptr];
                 ptr ++;
             }
+            //무게 초과로 더 이상 올릴 수 없는 경우
             else{
                 int[] truck = road.remove();
                 roadWeight -= truck[0];
@@ -30,6 +34,7 @@ public class Solution {
             }
         }
 
+        //다리에 남아있는 트럭 옮기기
         while (!road.isEmpty()){
             int[] truck = road.remove();
             count += truck[1] + bridge_length-count;
