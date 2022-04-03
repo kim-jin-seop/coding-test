@@ -33,7 +33,7 @@ public class Solution {
         for(int i = 0; i < result.length; i++){
             String input = "";
             for(int j = 0; j <result[i].length; j++){
-                input += result[i][j] == '*' ? "*" : ".";
+                input = input + (result[i][j] == '*' ? "*" : ".");
             }
             answer[answer.length-1-i] = input;
         }
@@ -42,13 +42,13 @@ public class Solution {
     }
 
     private boolean findMeet(int[] line1, int[] line2, ArrayList<int[]> meetLocs) {
-        double x = 0;
-        double y = 0;
+        double x;
+        double y;
 
         if ((line1[0] == 0 && line2[0] == 0) || (line1[1] == 0 && line2[1] == 0))
             return false;
 
-        if(line1[0] == 0){
+        if(line1[0] == 0    ){
             y = -1.0*line1[2]/line1[1];
             x = solveEquation(SOLVE_X, y, line2);
         }
